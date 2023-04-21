@@ -1,0 +1,11 @@
+framework module PXKit {
+  umbrella header "PXKit.h"
+
+  export *
+  module * { export * }
+}
+
+module PXKit.Swift {
+  header "PXKit-Swift.h"
+  requires objc
+}
