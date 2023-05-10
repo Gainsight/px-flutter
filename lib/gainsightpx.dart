@@ -341,8 +341,8 @@ class GainsightPX {
         frame[_TouchInterceptorKeys.height]);
     rect = MatrixUtils.transformRect(transform, rect);
     return {
-      _TouchInterceptorKeys.X: rect.left,
-      _TouchInterceptorKeys.Y: rect.top,
+      _TouchInterceptorKeys.X: rect.left.isNaN ? 0 : rect.left,
+      _TouchInterceptorKeys.Y: rect.top.isNaN ? 0 : rect.top,
       _TouchInterceptorKeys.width: rect.width,
       _TouchInterceptorKeys.height: rect.height,
     };
@@ -461,8 +461,8 @@ class _TouchInterpreter {
         final Map viewFrame = {
           _TouchInterceptorKeys.w: root.size.width,
           _TouchInterceptorKeys.h: root.size.height,
-          _TouchInterceptorKeys.X: offset.dx,
-          _TouchInterceptorKeys.Y: offset.dy
+          _TouchInterceptorKeys.X: offset.dx.isNaN ? 0 : offset.dx,
+          _TouchInterceptorKeys.Y: offset.dy.isNaN ? 0 : offset.dy
         };
         tree[_TouchInterceptorKeys.rect] = viewFrame;
       }
@@ -606,8 +606,8 @@ class _TouchInterpreter {
               viewFrame = {
                 _TouchInterceptorKeys.width: renderObject.size.width,
                 _TouchInterceptorKeys.height: renderObject.size.height,
-                _TouchInterceptorKeys.X: offset.dx,
-                _TouchInterceptorKeys.Y: offset.dy
+                _TouchInterceptorKeys.X: offset.dx.isNaN ? 0 : offset.dx,
+                _TouchInterceptorKeys.Y: offset.dy.isNaN ? 0 : offset.dy
               };
             }
             result.add(element);
@@ -644,8 +644,8 @@ class _TouchInterpreter {
             attributes = {
               _TouchInterceptorKeys.width: renderObject.size.width,
               _TouchInterceptorKeys.height: renderObject.size.height,
-              _TouchInterceptorKeys.X: offset.dx,
-              _TouchInterceptorKeys.Y: offset.dy
+              _TouchInterceptorKeys.X: offset.dx.isNaN ? 0 : offset.dx,
+              _TouchInterceptorKeys.Y: offset.dy.isNaN ? 0 : offset.dy
             };
           } else {
             element.visitChildren(visitor);
