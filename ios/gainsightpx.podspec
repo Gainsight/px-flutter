@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'gainsightpx'
-  s.version          = '1.9.0'
+  s.version          = '1.9.4'
   s.summary          = 'A new flutter plugin project.'
   s.description      = 'Gainsight PX flutter plugin for analytics'
   s.homepage         = 'http://example.com'

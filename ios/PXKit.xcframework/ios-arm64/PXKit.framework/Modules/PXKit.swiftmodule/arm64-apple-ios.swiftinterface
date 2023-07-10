@@ -1,6 +1,6 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)
-// swift-module-flags: -target arm64-apple-ios10.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name PXKit
+// swift-compiler-version: Apple Swift version 5.8.1 (swiftlang-5.8.0.124.5 clang-1403.0.22.11.100)
+// swift-module-flags: -target arm64-apple-ios11.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name PXKit
 // swift-module-flags-ignorable: -enable-bare-slash-regex
 import Compression
 import CoreFoundation
@@ -58,21 +58,21 @@ extension PXKit.Archive {
 }
 public protocol DataResponseSerializerProtocol {
   associatedtype SerializedObject
-  var serializeResponse: (Foundation.URLRequest?, Foundation.HTTPURLResponse?, Foundation.Data?, Swift.Error?) -> PXKit.Result<Self.SerializedObject> { get }
+  var serializeResponse: (Foundation.URLRequest?, Foundation.HTTPURLResponse?, Foundation.Data?, (any Swift.Error)?) -> PXKit.Result<Self.SerializedObject> { get }
 }
 public struct DataResponseSerializer<Value> : PXKit.DataResponseSerializerProtocol {
   public typealias SerializedObject = Value
-  public var serializeResponse: (Foundation.URLRequest?, Foundation.HTTPURLResponse?, Foundation.Data?, Swift.Error?) -> PXKit.Result<Value>
-  public init(serializeResponse: @escaping (Foundation.URLRequest?, Foundation.HTTPURLResponse?, Foundation.Data?, Swift.Error?) -> PXKit.Result<Value>)
+  public var serializeResponse: (Foundation.URLRequest?, Foundation.HTTPURLResponse?, Foundation.Data?, (any Swift.Error)?) -> PXKit.Result<Value>
+  public init(serializeResponse: @escaping (Foundation.URLRequest?, Foundation.HTTPURLResponse?, Foundation.Data?, (any Swift.Error)?) -> PXKit.Result<Value>)
 }
 public protocol DownloadResponseSerializerProtocol {
   associatedtype SerializedObject
-  var serializeResponse: (Foundation.URLRequest?, Foundation.HTTPURLResponse?, Foundation.URL?, Swift.Error?) -> PXKit.Result<Self.SerializedObject> { get }
+  var serializeResponse: (Foundation.URLRequest?, Foundation.HTTPURLResponse?, Foundation.URL?, (any Swift.Error)?) -> PXKit.Result<Self.SerializedObject> { get }
 }
 public struct DownloadResponseSerializer<Value> : PXKit.DownloadResponseSerializerProtocol {
   public typealias SerializedObject = Value
-  public var serializeResponse: (Foundation.URLRequest?, Foundation.HTTPURLResponse?, Foundation.URL?, Swift.Error?) -> PXKit.Result<Value>
-  public init(serializeResponse: @escaping (Foundation.URLRequest?, Foundation.HTTPURLResponse?, Foundation.URL?, Swift.Error?) -> PXKit.Result<Value>)
+  public var serializeResponse: (Foundation.URLRequest?, Foundation.HTTPURLResponse?, Foundation.URL?, (any Swift.Error)?) -> PXKit.Result<Value>
+  public init(serializeResponse: @escaping (Foundation.URLRequest?, Foundation.HTTPURLResponse?, Foundation.URL?, (any Swift.Error)?) -> PXKit.Result<Value>)
 }
 extension PXKit.DataRequest {
   @discardableResult
@@ -87,7 +87,7 @@ extension PXKit.DownloadRequest {
   public func response<T>(queue: Dispatch.DispatchQueue? = nil, responseSerializer: T, completionHandler: @escaping (PXKit.DownloadResponse<T.SerializedObject>) -> Swift.Void) -> Self where T : PXKit.DownloadResponseSerializerProtocol
 }
 extension PXKit.Request {
-  public static func serializeResponseData(response: Foundation.HTTPURLResponse?, data: Foundation.Data?, error: Swift.Error?) -> PXKit.Result<Foundation.Data>
+  public static func serializeResponseData(response: Foundation.HTTPURLResponse?, data: Foundation.Data?, error: (any Swift.Error)?) -> PXKit.Result<Foundation.Data>
 }
 extension PXKit.DataRequest {
   public static func dataResponseSerializer() -> PXKit.DataResponseSerializer<Foundation.Data>
@@ -100,7 +100,7 @@ extension PXKit.DownloadRequest {
   public func responseData(queue: Dispatch.DispatchQueue? = nil, completionHandler: @escaping (PXKit.DownloadResponse<Foundation.Data>) -> Swift.Void) -> Self
 }
 extension PXKit.Request {
-  public static func serializeResponseString(encoding: Swift.String.Encoding?, response: Foundation.HTTPURLResponse?, data: Foundation.Data?, error: Swift.Error?) -> PXKit.Result<Swift.String>
+  public static func serializeResponseString(encoding: Swift.String.Encoding?, response: Foundation.HTTPURLResponse?, data: Foundation.Data?, error: (any Swift.Error)?) -> PXKit.Result<Swift.String>
 }
 extension PXKit.DataRequest {
   public static func stringResponseSerializer(encoding: Swift.String.Encoding? = nil) -> PXKit.DataResponseSerializer<Swift.String>
@@ -113,7 +113,7 @@ extension PXKit.DownloadRequest {
   public func responseString(queue: Dispatch.DispatchQueue? = nil, encoding: Swift.String.Encoding? = nil, completionHandler: @escaping (PXKit.DownloadResponse<Swift.String>) -> Swift.Void) -> Self
 }
 extension PXKit.Request {
-  public static func serializeResponseJSON(options: Foundation.JSONSerialization.ReadingOptions, response: Foundation.HTTPURLResponse?, data: Foundation.Data?, error: Swift.Error?) -> PXKit.Result<Any>
+  public static func serializeResponseJSON(options: Foundation.JSONSerialization.ReadingOptions, response: Foundation.HTTPURLResponse?, data: Foundation.Data?, error: (any Swift.Error)?) -> PXKit.Result<Any>
 }
 extension PXKit.DataRequest {
   public static func jsonResponseSerializer(options: Foundation.JSONSerialization.ReadingOptions = .allowFragments) -> PXKit.DataResponseSerializer<Any>
@@ -126,7 +126,7 @@ extension PXKit.DownloadRequest {
   public func responseJSON(queue: Dispatch.DispatchQueue? = nil, options: Foundation.JSONSerialization.ReadingOptions = .allowFragments, completionHandler: @escaping (PXKit.DownloadResponse<Any>) -> Swift.Void) -> Self
 }
 extension PXKit.Request {
-  public static func serializeResponsePropertyList(options: Foundation.PropertyListSerialization.ReadOptions, response: Foundation.HTTPURLResponse?, data: Foundation.Data?, error: Swift.Error?) -> PXKit.Result<Any>
+  public static func serializeResponsePropertyList(options: Foundation.PropertyListSerialization.ReadOptions, response: Foundation.HTTPURLResponse?, data: Foundation.Data?, error: (any Swift.Error)?) -> PXKit.Result<Any>
 }
 extension PXKit.DataRequest {
   public static func propertyListResponseSerializer(options: Foundation.PropertyListSerialization.ReadOptions = []) -> PXKit.DataResponseSerializer<Any>
@@ -181,32 +181,32 @@ extension Foundation.URLRequest : PXKit.URLRequestConvertible {
   public func asURLRequest() throws -> Foundation.URLRequest
 }
 extension Foundation.URLRequest {
-  public init(url: PXKit.URLConvertible, method: PXKit.HTTPMethod, headers: PXKit.HTTPHeaders? = nil) throws
+  public init(url: any PXKit.URLConvertible, method: PXKit.HTTPMethod, headers: PXKit.HTTPHeaders? = nil) throws
 }
 @discardableResult
-public func request(_ url: PXKit.URLConvertible, method: PXKit.HTTPMethod = .get, parameters: PXKit.Parameters? = nil, encoding: PXKit.ParameterEncoding = URLEncoding.default, headers: PXKit.HTTPHeaders? = nil) -> PXKit.DataRequest
+public func request(_ url: any PXKit.URLConvertible, method: PXKit.HTTPMethod = .get, parameters: PXKit.Parameters? = nil, encoding: any PXKit.ParameterEncoding = URLEncoding.default, headers: PXKit.HTTPHeaders? = nil) -> PXKit.DataRequest
 @discardableResult
-public func request(_ urlRequest: PXKit.URLRequestConvertible) -> PXKit.DataRequest
+public func request(_ urlRequest: any PXKit.URLRequestConvertible) -> PXKit.DataRequest
 @discardableResult
-public func download(_ url: PXKit.URLConvertible, method: PXKit.HTTPMethod = .get, parameters: PXKit.Parameters? = nil, encoding: PXKit.ParameterEncoding = URLEncoding.default, headers: PXKit.HTTPHeaders? = nil, to destination: PXKit.DownloadRequest.DownloadFileDestination? = nil) -> PXKit.DownloadRequest
+public func download(_ url: any PXKit.URLConvertible, method: PXKit.HTTPMethod = .get, parameters: PXKit.Parameters? = nil, encoding: any PXKit.ParameterEncoding = URLEncoding.default, headers: PXKit.HTTPHeaders? = nil, to destination: PXKit.DownloadRequest.DownloadFileDestination? = nil) -> PXKit.DownloadRequest
 @discardableResult
-public func download(_ urlRequest: PXKit.URLRequestConvertible, to destination: PXKit.DownloadRequest.DownloadFileDestination? = nil) -> PXKit.DownloadRequest
+public func download(_ urlRequest: any PXKit.URLRequestConvertible, to destination: PXKit.DownloadRequest.DownloadFileDestination? = nil) -> PXKit.DownloadRequest
 @discardableResult
 public func download(resumingWith resumeData: Foundation.Data, to destination: PXKit.DownloadRequest.DownloadFileDestination? = nil) -> PXKit.DownloadRequest
 @discardableResult
-public func upload(_ fileURL: Foundation.URL, to url: PXKit.URLConvertible, method: PXKit.HTTPMethod = .post, headers: PXKit.HTTPHeaders? = nil) -> PXKit.UploadRequest
+public func upload(_ fileURL: Foundation.URL, to url: any PXKit.URLConvertible, method: PXKit.HTTPMethod = .post, headers: PXKit.HTTPHeaders? = nil) -> PXKit.UploadRequest
 @discardableResult
-public func upload(_ fileURL: Foundation.URL, with urlRequest: PXKit.URLRequestConvertible) -> PXKit.UploadRequest
+public func upload(_ fileURL: Foundation.URL, with urlRequest: any PXKit.URLRequestConvertible) -> PXKit.UploadRequest
 @discardableResult
-public func upload(_ data: Foundation.Data, to url: PXKit.URLConvertible, method: PXKit.HTTPMethod = .post, headers: PXKit.HTTPHeaders? = nil) -> PXKit.UploadRequest
+public func upload(_ data: Foundation.Data, to url: any PXKit.URLConvertible, method: PXKit.HTTPMethod = .post, headers: PXKit.HTTPHeaders? = nil) -> PXKit.UploadRequest
 @discardableResult
-public func upload(_ data: Foundation.Data, with urlRequest: PXKit.URLRequestConvertible) -> PXKit.UploadRequest
+public func upload(_ data: Foundation.Data, with urlRequest: any PXKit.URLRequestConvertible) -> PXKit.UploadRequest
 @discardableResult
-public func upload(_ stream: Foundation.InputStream, to url: PXKit.URLConvertible, method: PXKit.HTTPMethod = .post, headers: PXKit.HTTPHeaders? = nil) -> PXKit.UploadRequest
+public func upload(_ stream: Foundation.InputStream, to url: any PXKit.URLConvertible, method: PXKit.HTTPMethod = .post, headers: PXKit.HTTPHeaders? = nil) -> PXKit.UploadRequest
 @discardableResult
-public func upload(_ stream: Foundation.InputStream, with urlRequest: PXKit.URLRequestConvertible) -> PXKit.UploadRequest
-public func upload(multipartFormData: @escaping (PXKit.MultipartFormData) -> Swift.Void, usingThreshold encodingMemoryThreshold: Swift.UInt64 = SessionManager.multipartFormDataEncodingMemoryThreshold, to url: PXKit.URLConvertible, method: PXKit.HTTPMethod = .post, headers: PXKit.HTTPHeaders? = nil, encodingCompletion: ((PXKit.SessionManager.MultipartFormDataEncodingResult) -> Swift.Void)?)
-public func upload(multipartFormData: @escaping (PXKit.MultipartFormData) -> Swift.Void, usingThreshold encodingMemoryThreshold: Swift.UInt64 = SessionManager.multipartFormDataEncodingMemoryThreshold, with urlRequest: PXKit.URLRequestConvertible, encodingCompletion: ((PXKit.SessionManager.MultipartFormDataEncodingResult) -> Swift.Void)?)
+public func upload(_ stream: Foundation.InputStream, with urlRequest: any PXKit.URLRequestConvertible) -> PXKit.UploadRequest
+public func upload(multipartFormData: @escaping (PXKit.MultipartFormData) -> Swift.Void, usingThreshold encodingMemoryThreshold: Swift.UInt64 = SessionManager.multipartFormDataEncodingMemoryThreshold, to url: any PXKit.URLConvertible, method: PXKit.HTTPMethod = .post, headers: PXKit.HTTPHeaders? = nil, encodingCompletion: ((PXKit.SessionManager.MultipartFormDataEncodingResult) -> Swift.Void)?)
+public func upload(multipartFormData: @escaping (PXKit.MultipartFormData) -> Swift.Void, usingThreshold encodingMemoryThreshold: Swift.UInt64 = SessionManager.multipartFormDataEncodingMemoryThreshold, with urlRequest: any PXKit.URLRequestConvertible, encodingCompletion: ((PXKit.SessionManager.MultipartFormDataEncodingResult) -> Swift.Void)?)
 @available(iOS 9.0, macOS 10.11, tvOS 9.0, *)
 @discardableResult
 public func stream(withHostName hostName: Swift.String, port: Swift.Int) -> PXKit.StreamRequest
@@ -244,7 +244,7 @@ public struct DynamicImageFilter : PXKit.ImageFilter {
   public init(_ identifier: Swift.String, filter: @escaping (PXKit.Image) -> PXKit.Image)
 }
 public protocol CompositeImageFilter : PXKit.ImageFilter {
-  var filters: [PXKit.ImageFilter] { get }
+  var filters: [any PXKit.ImageFilter] { get }
 }
 extension PXKit.CompositeImageFilter {
   public var identifier: Swift.String {
@@ -255,9 +255,9 @@ extension PXKit.CompositeImageFilter {
   }
 }
 public struct DynamicCompositeImageFilter : PXKit.CompositeImageFilter {
-  public let filters: [PXKit.ImageFilter]
-  public init(_ filters: [PXKit.ImageFilter])
-  public init(_ filters: PXKit.ImageFilter...)
+  public let filters: [any PXKit.ImageFilter]
+  public init(_ filters: [any PXKit.ImageFilter])
+  public init(_ filters: any PXKit.ImageFilter...)
 }
 public struct ScaledToSizeFilter : PXKit.ImageFilter, PXKit.Sizable {
   public let size: CoreFoundation.CGSize
@@ -319,22 +319,22 @@ public struct BlurFilter : PXKit.ImageFilter, PXKit.CoreImageFilter {
 }
 public struct ScaledToSizeWithRoundedCornersFilter : PXKit.CompositeImageFilter {
   public init(size: CoreFoundation.CGSize, radius: CoreFoundation.CGFloat, divideRadiusByImageScale: Swift.Bool = false)
-  public let filters: [PXKit.ImageFilter]
+  public let filters: [any PXKit.ImageFilter]
 }
 public struct AspectScaledToFillSizeWithRoundedCornersFilter : PXKit.CompositeImageFilter {
   public init(size: CoreFoundation.CGSize, radius: CoreFoundation.CGFloat, divideRadiusByImageScale: Swift.Bool = false)
-  public let filters: [PXKit.ImageFilter]
+  public let filters: [any PXKit.ImageFilter]
 }
 public struct ScaledToSizeCircleFilter : PXKit.CompositeImageFilter {
   public init(size: CoreFoundation.CGSize)
-  public let filters: [PXKit.ImageFilter]
+  public let filters: [any PXKit.ImageFilter]
 }
 public struct AspectScaledToFillSizeCircleFilter : PXKit.CompositeImageFilter {
   public init(size: CoreFoundation.CGSize)
-  public let filters: [PXKit.ImageFilter]
+  public let filters: [any PXKit.ImageFilter]
 }
 @objc open class SessionDelegate : ObjectiveC.NSObject {
-  open var sessionDidBecomeInvalidWithError: ((Foundation.URLSession, Swift.Error?) -> Swift.Void)?
+  open var sessionDidBecomeInvalidWithError: ((Foundation.URLSession, (any Swift.Error)?) -> Swift.Void)?
   open var sessionDidReceiveChallenge: ((Foundation.URLSession, Foundation.URLAuthenticationChallenge) -> (Foundation.URLSession.AuthChallengeDisposition, Foundation.URLCredential?))?
   open var sessionDidReceiveChallengeWithCompletion: ((Foundation.URLSession, Foundation.URLAuthenticationChallenge, @escaping (Foundation.URLSession.AuthChallengeDisposition, Foundation.URLCredential?) -> Swift.Void) -> Swift.Void)?
   open var sessionDidFinishEventsForBackgroundURLSession: ((Foundation.URLSession) -> Swift.Void)?
@@ -345,7 +345,7 @@ public struct AspectScaledToFillSizeCircleFilter : PXKit.CompositeImageFilter {
   open var taskNeedNewBodyStream: ((Foundation.URLSession, Foundation.URLSessionTask) -> Foundation.InputStream?)?
   open var taskNeedNewBodyStreamWithCompletion: ((Foundation.URLSession, Foundation.URLSessionTask, @escaping (Foundation.InputStream?) -> Swift.Void) -> Swift.Void)?
   open var taskDidSendBodyData: ((Foundation.URLSession, Foundation.URLSessionTask, Swift.Int64, Swift.Int64, Swift.Int64) -> Swift.Void)?
-  open var taskDidComplete: ((Foundation.URLSession, Foundation.URLSessionTask, Swift.Error?) -> Swift.Void)?
+  open var taskDidComplete: ((Foundation.URLSession, Foundation.URLSessionTask, (any Swift.Error)?) -> Swift.Void)?
   open var dataTaskDidReceiveResponse: ((Foundation.URLSession, Foundation.URLSessionDataTask, Foundation.URLResponse) -> Foundation.URLSession.ResponseDisposition)?
   open var dataTaskDidReceiveResponseWithCompletion: ((Foundation.URLSession, Foundation.URLSessionDataTask, Foundation.URLResponse, @escaping (Foundation.URLSession.ResponseDisposition) -> Swift.Void) -> Swift.Void)?
   open var dataTaskDidBecomeDownloadTask: ((Foundation.URLSession, Foundation.URLSessionDataTask, Foundation.URLSessionDownloadTask) -> Swift.Void)?
@@ -384,7 +384,7 @@ public struct AspectScaledToFillSizeCircleFilter : PXKit.CompositeImageFilter {
   @objc deinit
 }
 extension PXKit.SessionDelegate : Foundation.URLSessionDelegate {
-  @objc dynamic open func urlSession(_ session: Foundation.URLSession, didBecomeInvalidWithError error: Swift.Error?)
+  @objc dynamic open func urlSession(_ session: Foundation.URLSession, didBecomeInvalidWithError error: (any Swift.Error)?)
   @objc dynamic open func urlSession(_ session: Foundation.URLSession, didReceive challenge: Foundation.URLAuthenticationChallenge, completionHandler: @escaping (Foundation.URLSession.AuthChallengeDisposition, Foundation.URLCredential?) -> Swift.Void)
   @objc dynamic open func urlSessionDidFinishEvents(forBackgroundURLSession session: Foundation.URLSession)
 }
@@ -395,7 +395,7 @@ extension PXKit.SessionDelegate : Foundation.URLSessionTaskDelegate {
   @objc dynamic open func urlSession(_ session: Foundation.URLSession, task: Foundation.URLSessionTask, didSendBodyData bytesSent: Swift.Int64, totalBytesSent: Swift.Int64, totalBytesExpectedToSend: Swift.Int64)
   @available(iOS 10.0, macOS 10.12, tvOS 10.0, *)
   @objc(URLSession:task:didFinishCollectingMetrics:) dynamic open func urlSession(_ session: Foundation.URLSession, task: Foundation.URLSessionTask, didFinishCollecting metrics: Foundation.URLSessionTaskMetrics)
-  @objc dynamic open func urlSession(_ session: Foundation.URLSession, task: Foundation.URLSessionTask, didCompleteWithError error: Swift.Error?)
+  @objc dynamic open func urlSession(_ session: Foundation.URLSession, task: Foundation.URLSessionTask, didCompleteWithError error: (any Swift.Error)?)
 }
 extension PXKit.SessionDelegate : Foundation.URLSessionDataDelegate {
   @objc dynamic open func urlSession(_ session: Foundation.URLSession, dataTask: Foundation.URLSessionDataTask, didReceive response: Foundation.URLResponse, completionHandler: @escaping (Foundation.URLSession.ResponseDisposition) -> Swift.Void)
@@ -420,31 +420,31 @@ extension PXKit.GainsightPX {
 }
 public class PXNetworking {
   @discardableResult
-  public static func fetch(url: Foundation.URL, params: [Swift.String : Any]?, headers: [Swift.String : Swift.String]?, httpMethod: PXKit.HTTPMethod, completion: @escaping (Foundation.Data?, Foundation.HTTPURLResponse?, Swift.Error?) -> Swift.Void) -> Foundation.URLSessionTask?
+  public static func fetch(url: Foundation.URL, params: [Swift.String : Any]?, headers: [Swift.String : Swift.String]?, httpMethod: PXKit.HTTPMethod, completion: @escaping (Foundation.Data?, Foundation.HTTPURLResponse?, (any Swift.Error)?) -> Swift.Void) -> Foundation.URLSessionTask?
   @discardableResult
-  public static func downloadFile(url: Foundation.URL, params: [Swift.String : Any]?, headers: [Swift.String : Swift.String]?, httpMethod: PXKit.HTTPMethod, destinationFilePath: Foundation.URL, completion: @escaping (Foundation.URL?, Foundation.HTTPURLResponse?, Swift.Error?) -> Swift.Void) -> Foundation.URLSessionTask?
+  public static func downloadFile(url: Foundation.URL, params: [Swift.String : Any]?, headers: [Swift.String : Swift.String]?, httpMethod: PXKit.HTTPMethod, destinationFilePath: Foundation.URL, completion: @escaping (Foundation.URL?, Foundation.HTTPURLResponse?, (any Swift.Error)?) -> Swift.Void) -> Foundation.URLSessionTask?
   @objc deinit
 }
 public enum AFError : Swift.Error {
   public enum ParameterEncodingFailureReason {
     case missingURL
-    case jsonEncodingFailed(error: Swift.Error)
-    case propertyListEncodingFailed(error: Swift.Error)
+    case jsonEncodingFailed(error: any Swift.Error)
+    case propertyListEncodingFailed(error: any Swift.Error)
   }
   public enum MultipartEncodingFailureReason {
     case bodyPartURLInvalid(url: Foundation.URL)
     case bodyPartFilenameInvalid(in: Foundation.URL)
     case bodyPartFileNotReachable(at: Foundation.URL)
-    case bodyPartFileNotReachableWithError(atURL: Foundation.URL, error: Swift.Error)
+    case bodyPartFileNotReachableWithError(atURL: Foundation.URL, error: any Swift.Error)
     case bodyPartFileIsDirectory(at: Foundation.URL)
     case bodyPartFileSizeNotAvailable(at: Foundation.URL)
-    case bodyPartFileSizeQueryFailedWithError(forURL: Foundation.URL, error: Swift.Error)
+    case bodyPartFileSizeQueryFailedWithError(forURL: Foundation.URL, error: any Swift.Error)
     case bodyPartInputStreamCreationFailed(for: Foundation.URL)
     case outputStreamCreationFailed(for: Foundation.URL)
     case outputStreamFileAlreadyExists(at: Foundation.URL)
     case outputStreamURLInvalid(url: Foundation.URL)
-    case outputStreamWriteFailed(error: Swift.Error)
-    case inputStreamReadFailed(error: Swift.Error)
+    case outputStreamWriteFailed(error: any Swift.Error)
+    case inputStreamReadFailed(error: any Swift.Error)
   }
   public enum ResponseValidationFailureReason {
     case dataFileNil
@@ -459,10 +459,10 @@ public enum AFError : Swift.Error {
     case inputFileNil
     case inputFileReadFailed(at: Foundation.URL)
     case stringSerializationFailed(encoding: Swift.String.Encoding)
-    case jsonSerializationFailed(error: Swift.Error)
-    case propertyListSerializationFailed(error: Swift.Error)
+    case jsonSerializationFailed(error: any Swift.Error)
+    case propertyListSerializationFailed(error: any Swift.Error)
   }
-  case invalidURL(url: PXKit.URLConvertible)
+  case invalidURL(url: any PXKit.URLConvertible)
   case parameterEncodingFailed(reason: PXKit.AFError.ParameterEncodingFailureReason)
   case multipartEncodingFailed(reason: PXKit.AFError.MultipartEncodingFailureReason)
   case responseValidationFailed(reason: PXKit.AFError.ResponseValidationFailureReason)
@@ -486,13 +486,13 @@ extension PXKit.AFError {
   }
 }
 extension PXKit.AFError {
-  public var urlConvertible: PXKit.URLConvertible? {
+  public var urlConvertible: (any PXKit.URLConvertible)? {
     get
   }
   public var url: Foundation.URL? {
     get
   }
-  public var underlyingError: Swift.Error? {
+  public var underlyingError: (any Swift.Error)? {
     get
   }
   public var acceptableContentTypes: [Swift.String]? {
@@ -629,8 +629,8 @@ extension UIKit.UIImageView {
     get
     set
   }
-  @_Concurrency.MainActor(unsafe) public func af_setImage(withURL url: Foundation.URL, placeholderImage: UIKit.UIImage? = nil, filter: PXKit.ImageFilter? = nil, progress: PXKit.ImageDownloader.ProgressHandler? = nil, progressQueue: Dispatch.DispatchQueue = DispatchQueue.main, imageTransition: UIKit.UIImageView.ImageTransition = .noTransition, runImageTransitionIfCached: Swift.Bool = false, completion: ((PXKit.DataResponse<UIKit.UIImage>) -> Swift.Void)? = nil)
-  @_Concurrency.MainActor(unsafe) public func af_setImage(withURLRequest urlRequest: PXKit.URLRequestConvertible, placeholderImage: UIKit.UIImage? = nil, filter: PXKit.ImageFilter? = nil, progress: PXKit.ImageDownloader.ProgressHandler? = nil, progressQueue: Dispatch.DispatchQueue = DispatchQueue.main, imageTransition: UIKit.UIImageView.ImageTransition = .noTransition, runImageTransitionIfCached: Swift.Bool = false, completion: ((PXKit.DataResponse<UIKit.UIImage>) -> Swift.Void)? = nil)
+  @_Concurrency.MainActor(unsafe) public func af_setImage(withURL url: Foundation.URL, placeholderImage: UIKit.UIImage? = nil, filter: (any PXKit.ImageFilter)? = nil, progress: PXKit.ImageDownloader.ProgressHandler? = nil, progressQueue: Dispatch.DispatchQueue = DispatchQueue.main, imageTransition: UIKit.UIImageView.ImageTransition = .noTransition, runImageTransitionIfCached: Swift.Bool = false, completion: ((PXKit.DataResponse<UIKit.UIImage>) -> Swift.Void)? = nil)
+  @_Concurrency.MainActor(unsafe) public func af_setImage(withURLRequest urlRequest: any PXKit.URLRequestConvertible, placeholderImage: UIKit.UIImage? = nil, filter: (any PXKit.ImageFilter)? = nil, progress: PXKit.ImageDownloader.ProgressHandler? = nil, progressQueue: Dispatch.DispatchQueue = DispatchQueue.main, imageTransition: UIKit.UIImageView.ImageTransition = .noTransition, runImageTransitionIfCached: Swift.Bool = false, completion: ((PXKit.DataResponse<UIKit.UIImage>) -> Swift.Void)? = nil)
   @_Concurrency.MainActor(unsafe) public func af_cancelImageRequest()
   @_Concurrency.MainActor(unsafe) public func run(_ imageTransition: UIKit.UIImageView.ImageTransition, with image: PXKit.Image)
 }
@@ -662,7 +662,7 @@ extension UIKit.UIImageView {
   @objc deinit
 }
 @objc public class GainsightPX : ObjectiveC.NSObject {
-  @objc weak public var uiMapperConsumer: PXKit.UIMapperConsuming? {
+  @objc weak public var uiMapperConsumer: (any PXKit.UIMapperConsuming)? {
     @objc get
     @objc set
   }
@@ -690,7 +690,9 @@ extension UIKit.UIImageView {
   @objc public func flush(errorCompletionBlock: PXKit.GainsightPXErrorBlock? = nil)
   @objc public class func enable()
   @objc public class func disable()
+  @objc public func engagements(enable: Swift.Bool)
   @objc public func reset()
+  @objc public func hardReset()
   @objc public class func libraryVersion() -> Swift.String
   @objc public class func bridgeName() -> Swift.String
   @objc public func enterEditingMode(url: Foundation.URL)
@@ -705,7 +707,7 @@ extension PXKit.GainsightPX {
   public var data: Foundation.Data? {
     get
   }
-  public var error: Swift.Error?
+  public var error: (any Swift.Error)?
   @objc deinit
 }
 open class NetworkReachabilityManager {
@@ -768,7 +770,7 @@ open class ImageDownloader {
       get
     }
   }
-  final public let imageCache: PXKit.ImageRequestCache?
+  final public let imageCache: (any PXKit.ImageRequestCache)?
   open var credential: Foundation.URLCredential? {
     get
   }
@@ -777,14 +779,14 @@ open class ImageDownloader {
   public static let `default`: PXKit.ImageDownloader
   open class func defaultURLSessionConfiguration() -> Foundation.URLSessionConfiguration
   open class func defaultURLCache() -> Foundation.URLCache
-  public init(configuration: Foundation.URLSessionConfiguration = ImageDownloader.defaultURLSessionConfiguration(), downloadPrioritization: PXKit.ImageDownloader.DownloadPrioritization = .fifo, maximumActiveDownloads: Swift.Int = 4, imageCache: PXKit.ImageRequestCache? = AutoPurgingImageCache())
-  public init(sessionManager: PXKit.SessionManager, downloadPrioritization: PXKit.ImageDownloader.DownloadPrioritization = .fifo, maximumActiveDownloads: Swift.Int = 4, imageCache: PXKit.ImageRequestCache? = AutoPurgingImageCache())
+  public init(configuration: Foundation.URLSessionConfiguration = ImageDownloader.defaultURLSessionConfiguration(), downloadPrioritization: PXKit.ImageDownloader.DownloadPrioritization = .fifo, maximumActiveDownloads: Swift.Int = 4, imageCache: (any PXKit.ImageRequestCache)? = AutoPurgingImageCache())
+  public init(sessionManager: PXKit.SessionManager, downloadPrioritization: PXKit.ImageDownloader.DownloadPrioritization = .fifo, maximumActiveDownloads: Swift.Int = 4, imageCache: (any PXKit.ImageRequestCache)? = AutoPurgingImageCache())
   open func addAuthentication(user: Swift.String, password: Swift.String, persistence: Foundation.URLCredential.Persistence = .forSession)
   open func addAuthentication(usingCredential credential: Foundation.URLCredential)
   @discardableResult
-  open func download(_ urlRequest: PXKit.URLRequestConvertible, receiptID: Swift.String = UUID().uuidString, filter: PXKit.ImageFilter? = nil, progress: PXKit.ImageDownloader.ProgressHandler? = nil, progressQueue: Dispatch.DispatchQueue = DispatchQueue.main, completion: PXKit.ImageDownloader.CompletionHandler?) -> PXKit.RequestReceipt?
+  open func download(_ urlRequest: any PXKit.URLRequestConvertible, receiptID: Swift.String = UUID().uuidString, filter: (any PXKit.ImageFilter)? = nil, progress: PXKit.ImageDownloader.ProgressHandler? = nil, progressQueue: Dispatch.DispatchQueue = DispatchQueue.main, completion: PXKit.ImageDownloader.CompletionHandler?) -> PXKit.RequestReceipt?
   @discardableResult
-  open func download(_ urlRequests: [PXKit.URLRequestConvertible], filter: PXKit.ImageFilter? = nil, progress: PXKit.ImageDownloader.ProgressHandler? = nil, progressQueue: Dispatch.DispatchQueue = DispatchQueue.main, completion: PXKit.ImageDownloader.CompletionHandler? = nil) -> [PXKit.RequestReceipt]
+  open func download(_ urlRequests: [any PXKit.URLRequestConvertible], filter: (any PXKit.ImageFilter)? = nil, progress: PXKit.ImageDownloader.ProgressHandler? = nil, progressQueue: Dispatch.DispatchQueue = DispatchQueue.main, completion: PXKit.ImageDownloader.CompletionHandler? = nil) -> [PXKit.RequestReceipt]
   open func cancelRequest(with requestReceipt: PXKit.RequestReceipt)
   @objc deinit
 }
@@ -876,16 +878,16 @@ extension UIKit.UIButton {
     get
     set
   }
-  @_Concurrency.MainActor(unsafe) public func af_setImage(for state: PXKit.ControlState, url: Foundation.URL, placeholderImage: UIKit.UIImage? = nil, filter: PXKit.ImageFilter? = nil, progress: PXKit.ImageDownloader.ProgressHandler? = nil, progressQueue: Dispatch.DispatchQueue = DispatchQueue.main, completion: ((PXKit.DataResponse<UIKit.UIImage>) -> Swift.Void)? = nil)
-  @_Concurrency.MainActor(unsafe) public func af_setImage(for state: PXKit.ControlState, urlRequest: PXKit.URLRequestConvertible, placeholderImage: UIKit.UIImage? = nil, filter: PXKit.ImageFilter? = nil, progress: PXKit.ImageDownloader.ProgressHandler? = nil, progressQueue: Dispatch.DispatchQueue = DispatchQueue.main, completion: ((PXKit.DataResponse<UIKit.UIImage>) -> Swift.Void)? = nil)
+  @_Concurrency.MainActor(unsafe) public func af_setImage(for state: PXKit.ControlState, url: Foundation.URL, placeholderImage: UIKit.UIImage? = nil, filter: (any PXKit.ImageFilter)? = nil, progress: PXKit.ImageDownloader.ProgressHandler? = nil, progressQueue: Dispatch.DispatchQueue = DispatchQueue.main, completion: ((PXKit.DataResponse<UIKit.UIImage>) -> Swift.Void)? = nil)
+  @_Concurrency.MainActor(unsafe) public func af_setImage(for state: PXKit.ControlState, urlRequest: any PXKit.URLRequestConvertible, placeholderImage: UIKit.UIImage? = nil, filter: (any PXKit.ImageFilter)? = nil, progress: PXKit.ImageDownloader.ProgressHandler? = nil, progressQueue: Dispatch.DispatchQueue = DispatchQueue.main, completion: ((PXKit.DataResponse<UIKit.UIImage>) -> Swift.Void)? = nil)
   @_Concurrency.MainActor(unsafe) public func af_cancelImageRequest(for state: PXKit.ControlState)
-  @_Concurrency.MainActor(unsafe) public func af_setBackgroundImage(for state: PXKit.ControlState, url: Foundation.URL, placeholderImage: UIKit.UIImage? = nil, filter: PXKit.ImageFilter? = nil, progress: PXKit.ImageDownloader.ProgressHandler? = nil, progressQueue: Dispatch.DispatchQueue = DispatchQueue.main, completion: ((PXKit.DataResponse<UIKit.UIImage>) -> Swift.Void)? = nil)
-  @_Concurrency.MainActor(unsafe) public func af_setBackgroundImage(for state: PXKit.ControlState, urlRequest: PXKit.URLRequestConvertible, placeholderImage: UIKit.UIImage? = nil, filter: PXKit.ImageFilter? = nil, progress: PXKit.ImageDownloader.ProgressHandler? = nil, progressQueue: Dispatch.DispatchQueue = DispatchQueue.main, completion: ((PXKit.DataResponse<UIKit.UIImage>) -> Swift.Void)? = nil)
+  @_Concurrency.MainActor(unsafe) public func af_setBackgroundImage(for state: PXKit.ControlState, url: Foundation.URL, placeholderImage: UIKit.UIImage? = nil, filter: (any PXKit.ImageFilter)? = nil, progress: PXKit.ImageDownloader.ProgressHandler? = nil, progressQueue: Dispatch.DispatchQueue = DispatchQueue.main, completion: ((PXKit.DataResponse<UIKit.UIImage>) -> Swift.Void)? = nil)
+  @_Concurrency.MainActor(unsafe) public func af_setBackgroundImage(for state: PXKit.ControlState, urlRequest: any PXKit.URLRequestConvertible, placeholderImage: UIKit.UIImage? = nil, filter: (any PXKit.ImageFilter)? = nil, progress: PXKit.ImageDownloader.ProgressHandler? = nil, progressQueue: Dispatch.DispatchQueue = DispatchQueue.main, completion: ((PXKit.DataResponse<UIKit.UIImage>) -> Swift.Void)? = nil)
   @_Concurrency.MainActor(unsafe) public func af_cancelBackgroundImageRequest(for state: PXKit.ControlState)
 }
 @objc(PXAnalyticsConfigurations) public class AnalyticsConfigurations : ObjectiveC.NSObject {
   @objc public var apiKey: Swift.String
-  @objc public var crypto: PXKit.GPXCrypto?
+  @objc public var crypto: (any PXKit.GPXCrypto)?
   @objc public var connection: PXKit.Connection
   @objc public var flushQueueSize: Swift.Int
   @objc public var maxQueueSize: Swift.Int
@@ -917,7 +919,7 @@ extension Foundation.Data {
 extension PXKit.Request {
   public enum ValidationResult {
     case success
-    case failure(Swift.Error)
+    case failure(any Swift.Error)
   }
 }
 extension PXKit.DataRequest {
@@ -967,9 +969,9 @@ public struct DefaultDataResponse {
   public let request: Foundation.URLRequest?
   public let response: Foundation.HTTPURLResponse?
   public let data: Foundation.Data?
-  public let error: Swift.Error?
+  public let error: (any Swift.Error)?
   public let timeline: PXKit.Timeline
-  public init(request: Foundation.URLRequest?, response: Foundation.HTTPURLResponse?, data: Foundation.Data?, error: Swift.Error?, timeline: PXKit.Timeline = Timeline(), metrics: Swift.AnyObject? = nil)
+  public init(request: Foundation.URLRequest?, response: Foundation.HTTPURLResponse?, data: Foundation.Data?, error: (any Swift.Error)?, timeline: PXKit.Timeline = Timeline(), metrics: Swift.AnyObject? = nil)
 }
 public struct DataResponse<Value> {
   public let request: Foundation.URLRequest?
@@ -980,7 +982,7 @@ public struct DataResponse<Value> {
   public var value: Value? {
     get
   }
-  public var error: Swift.Error? {
+  public var error: (any Swift.Error)? {
     get
   }
   public init(request: Foundation.URLRequest?, response: Foundation.HTTPURLResponse?, data: Foundation.Data?, result: PXKit.Result<Value>, timeline: PXKit.Timeline = Timeline())
@@ -996,8 +998,8 @@ extension PXKit.DataResponse : Swift.CustomStringConvertible, Swift.CustomDebugS
 extension PXKit.DataResponse {
   public func map<T>(_ transform: (Value) -> T) -> PXKit.DataResponse<T>
   public func flatMap<T>(_ transform: (Value) throws -> T) -> PXKit.DataResponse<T>
-  public func mapError<E>(_ transform: (Swift.Error) -> E) -> PXKit.DataResponse<Value> where E : Swift.Error
-  public func flatMapError<E>(_ transform: (Swift.Error) throws -> E) -> PXKit.DataResponse<Value> where E : Swift.Error
+  public func mapError<E>(_ transform: (any Swift.Error) -> E) -> PXKit.DataResponse<Value> where E : Swift.Error
+  public func flatMapError<E>(_ transform: (any Swift.Error) throws -> E) -> PXKit.DataResponse<Value> where E : Swift.Error
 }
 public struct DefaultDownloadResponse {
   public let request: Foundation.URLRequest?
@@ -1005,9 +1007,9 @@ public struct DefaultDownloadResponse {
   public let temporaryURL: Foundation.URL?
   public let destinationURL: Foundation.URL?
   public let resumeData: Foundation.Data?
-  public let error: Swift.Error?
+  public let error: (any Swift.Error)?
   public let timeline: PXKit.Timeline
-  public init(request: Foundation.URLRequest?, response: Foundation.HTTPURLResponse?, temporaryURL: Foundation.URL?, destinationURL: Foundation.URL?, resumeData: Foundation.Data?, error: Swift.Error?, timeline: PXKit.Timeline = Timeline(), metrics: Swift.AnyObject? = nil)
+  public init(request: Foundation.URLRequest?, response: Foundation.HTTPURLResponse?, temporaryURL: Foundation.URL?, destinationURL: Foundation.URL?, resumeData: Foundation.Data?, error: (any Swift.Error)?, timeline: PXKit.Timeline = Timeline(), metrics: Swift.AnyObject? = nil)
 }
 public struct DownloadResponse<Value> {
   public let request: Foundation.URLRequest?
@@ -1020,7 +1022,7 @@ public struct DownloadResponse<Value> {
   public var value: Value? {
     get
   }
-  public var error: Swift.Error? {
+  public var error: (any Swift.Error)? {
     get
   }
   public init(request: Foundation.URLRequest?, response: Foundation.HTTPURLResponse?, temporaryURL: Foundation.URL?, destinationURL: Foundation.URL?, resumeData: Foundation.Data?, result: PXKit.Result<Value>, timeline: PXKit.Timeline = Timeline())
@@ -1036,8 +1038,8 @@ extension PXKit.DownloadResponse : Swift.CustomStringConvertible, Swift.CustomDe
 extension PXKit.DownloadResponse {
   public func map<T>(_ transform: (Value) -> T) -> PXKit.DownloadResponse<T>
   public func flatMap<T>(_ transform: (Value) throws -> T) -> PXKit.DownloadResponse<T>
-  public func mapError<E>(_ transform: (Swift.Error) -> E) -> PXKit.DownloadResponse<Value> where E : Swift.Error
-  public func flatMapError<E>(_ transform: (Swift.Error) throws -> E) -> PXKit.DownloadResponse<Value> where E : Swift.Error
+  public func mapError<E>(_ transform: (any Swift.Error) -> E) -> PXKit.DownloadResponse<Value> where E : Swift.Error
+  public func flatMapError<E>(_ transform: (any Swift.Error) throws -> E) -> PXKit.DownloadResponse<Value> where E : Swift.Error
 }
 @available(iOS 10.0, macOS 10.12, tvOS 10.0, *)
 extension PXKit.DefaultDataResponse {
@@ -1087,7 +1089,7 @@ open class MultipartFormData {
   public func writeEncodedData(to fileURL: Foundation.URL) throws
   @objc deinit
 }
-public typealias GainsightPXErrorBlock = (Swift.String, [Swift.String : Any]?, Swift.Error?) -> Swift.Void
+public typealias GainsightPXErrorBlock = (Swift.String, [Swift.String : Any]?, (any Swift.Error)?) -> Swift.Void
 extension Foundation.FileManager {
   public func zipItem(at sourceURL: Foundation.URL, to destinationURL: Foundation.URL, shouldKeepParent: Swift.Bool = true, compressionMethod: PXKit.CompressionMethod = .none, progress: Foundation.Progress? = nil) throws
   public func unzipItem(at sourceURL: Foundation.URL, to destinationURL: Foundation.URL, skipCRC32: Swift.Bool = false, progress: Foundation.Progress? = nil, preferredEncoding: Swift.String.Encoding? = nil) throws
@@ -1095,7 +1097,7 @@ extension Foundation.FileManager {
 extension Foundation.URL {
   public func isContained(in parentDirectoryURL: Foundation.URL) -> Swift.Bool
 }
-public typealias PXEngagementCallBack = (PXKit.EngagementCallBackModel?, Swift.Error?) -> Swift.Bool
+public typealias PXEngagementCallBack = (PXKit.EngagementCallBackModel?, (any Swift.Error)?) -> Swift.Bool
 @objc(PXEngagementCallBackModel) public class EngagementCallBackModel : ObjectiveC.NSObject {
   @objc final public let actionText: Swift.String
   @objc final public let actionData: Swift.String
@@ -1109,7 +1111,7 @@ public typealias PXEngagementCallBack = (PXKit.EngagementCallBackModel?, Swift.E
 }
 public enum Result<Value> {
   case success(Value)
-  case failure(Swift.Error)
+  case failure(any Swift.Error)
   public var isSuccess: Swift.Bool {
     get
   }
@@ -1119,7 +1121,7 @@ public enum Result<Value> {
   public var value: Value? {
     get
   }
-  public var error: Swift.Error? {
+  public var error: (any Swift.Error)? {
     get
   }
 }
@@ -1138,12 +1140,12 @@ extension PXKit.Result {
   public func unwrap() throws -> Value
   public func map<T>(_ transform: (Value) -> T) -> PXKit.Result<T>
   public func flatMap<T>(_ transform: (Value) throws -> T) -> PXKit.Result<T>
-  public func mapError<T>(_ transform: (Swift.Error) -> T) -> PXKit.Result<Value> where T : Swift.Error
-  public func flatMapError<T>(_ transform: (Swift.Error) throws -> T) -> PXKit.Result<Value> where T : Swift.Error
+  public func mapError<T>(_ transform: (any Swift.Error) -> T) -> PXKit.Result<Value> where T : Swift.Error
+  public func flatMapError<T>(_ transform: (any Swift.Error) throws -> T) -> PXKit.Result<Value> where T : Swift.Error
   @discardableResult
   public func withValue(_ closure: (Value) throws -> Swift.Void) rethrows -> PXKit.Result<Value>
   @discardableResult
-  public func withError(_ closure: (Swift.Error) throws -> Swift.Void) rethrows -> PXKit.Result<Value>
+  public func withError(_ closure: (any Swift.Error) throws -> Swift.Void) rethrows -> PXKit.Result<Value>
   @discardableResult
   public func ifSuccess(_ closure: () throws -> Swift.Void) rethrows -> PXKit.Result<Value>
   @discardableResult
@@ -1152,7 +1154,7 @@ extension PXKit.Result {
 open class SessionManager {
   public enum MultipartFormDataEncodingResult {
     case success(request: PXKit.UploadRequest, streamingFromDisk: Swift.Bool, streamFileURL: Foundation.URL?)
-    case failure(Swift.Error)
+    case failure(any Swift.Error)
   }
   public static let `default`: PXKit.SessionManager
   public static let defaultHTTPHeaders: PXKit.HTTPHeaders
@@ -1160,8 +1162,8 @@ open class SessionManager {
   final public let session: Foundation.URLSession
   final public let delegate: PXKit.SessionDelegate
   open var startRequestsImmediately: Swift.Bool
-  open var adapter: PXKit.RequestAdapter?
-  open var retrier: PXKit.RequestRetrier? {
+  open var adapter: (any PXKit.RequestAdapter)?
+  open var retrier: (any PXKit.RequestRetrier)? {
     get
     set
   }
@@ -1170,29 +1172,29 @@ open class SessionManager {
   public init?(session: Foundation.URLSession, delegate: PXKit.SessionDelegate, serverTrustPolicyManager: PXKit.ServerTrustPolicyManager? = nil)
   @objc deinit
   @discardableResult
-  open func request(_ url: PXKit.URLConvertible, method: PXKit.HTTPMethod = .get, parameters: PXKit.Parameters? = nil, encoding: PXKit.ParameterEncoding = URLEncoding.default, headers: PXKit.HTTPHeaders? = nil) -> PXKit.DataRequest
+  open func request(_ url: any PXKit.URLConvertible, method: PXKit.HTTPMethod = .get, parameters: PXKit.Parameters? = nil, encoding: any PXKit.ParameterEncoding = URLEncoding.default, headers: PXKit.HTTPHeaders? = nil) -> PXKit.DataRequest
   @discardableResult
-  open func request(_ urlRequest: PXKit.URLRequestConvertible) -> PXKit.DataRequest
+  open func request(_ urlRequest: any PXKit.URLRequestConvertible) -> PXKit.DataRequest
   @discardableResult
-  open func download(_ url: PXKit.URLConvertible, method: PXKit.HTTPMethod = .get, parameters: PXKit.Parameters? = nil, encoding: PXKit.ParameterEncoding = URLEncoding.default, headers: PXKit.HTTPHeaders? = nil, to destination: PXKit.DownloadRequest.DownloadFileDestination? = nil) -> PXKit.DownloadRequest
+  open func download(_ url: any PXKit.URLConvertible, method: PXKit.HTTPMethod = .get, parameters: PXKit.Parameters? = nil, encoding: any PXKit.ParameterEncoding = URLEncoding.default, headers: PXKit.HTTPHeaders? = nil, to destination: PXKit.DownloadRequest.DownloadFileDestination? = nil) -> PXKit.DownloadRequest
   @discardableResult
-  open func download(_ urlRequest: PXKit.URLRequestConvertible, to destination: PXKit.DownloadRequest.DownloadFileDestination? = nil) -> PXKit.DownloadRequest
+  open func download(_ urlRequest: any PXKit.URLRequestConvertible, to destination: PXKit.DownloadRequest.DownloadFileDestination? = nil) -> PXKit.DownloadRequest
   @discardableResult
   open func download(resumingWith resumeData: Foundation.Data, to destination: PXKit.DownloadRequest.DownloadFileDestination? = nil) -> PXKit.DownloadRequest
   @discardableResult
-  open func upload(_ fileURL: Foundation.URL, to url: PXKit.URLConvertible, method: PXKit.HTTPMethod = .post, headers: PXKit.HTTPHeaders? = nil) -> PXKit.UploadRequest
+  open func upload(_ fileURL: Foundation.URL, to url: any PXKit.URLConvertible, method: PXKit.HTTPMethod = .post, headers: PXKit.HTTPHeaders? = nil) -> PXKit.UploadRequest
   @discardableResult
-  open func upload(_ fileURL: Foundation.URL, with urlRequest: PXKit.URLRequestConvertible) -> PXKit.UploadRequest
+  open func upload(_ fileURL: Foundation.URL, with urlRequest: any PXKit.URLRequestConvertible) -> PXKit.UploadRequest
   @discardableResult
-  open func upload(_ data: Foundation.Data, to url: PXKit.URLConvertible, method: PXKit.HTTPMethod = .post, headers: PXKit.HTTPHeaders? = nil) -> PXKit.UploadRequest
+  open func upload(_ data: Foundation.Data, to url: any PXKit.URLConvertible, method: PXKit.HTTPMethod = .post, headers: PXKit.HTTPHeaders? = nil) -> PXKit.UploadRequest
   @discardableResult
-  open func upload(_ data: Foundation.Data, with urlRequest: PXKit.URLRequestConvertible) -> PXKit.UploadRequest
+  open func upload(_ data: Foundation.Data, with urlRequest: any PXKit.URLRequestConvertible) -> PXKit.UploadRequest
   @discardableResult
-  open func upload(_ stream: Foundation.InputStream, to url: PXKit.URLConvertible, method: PXKit.HTTPMethod = .post, headers: PXKit.HTTPHeaders? = nil) -> PXKit.UploadRequest
+  open func upload(_ stream: Foundation.InputStream, to url: any PXKit.URLConvertible, method: PXKit.HTTPMethod = .post, headers: PXKit.HTTPHeaders? = nil) -> PXKit.UploadRequest
   @discardableResult
-  open func upload(_ stream: Foundation.InputStream, with urlRequest: PXKit.URLRequestConvertible) -> PXKit.UploadRequest
-  open func upload(multipartFormData: @escaping (PXKit.MultipartFormData) -> Swift.Void, usingThreshold encodingMemoryThreshold: Swift.UInt64 = SessionManager.multipartFormDataEncodingMemoryThreshold, to url: PXKit.URLConvertible, method: PXKit.HTTPMethod = .post, headers: PXKit.HTTPHeaders? = nil, queue: Dispatch.DispatchQueue? = nil, encodingCompletion: ((PXKit.SessionManager.MultipartFormDataEncodingResult) -> Swift.Void)?)
-  open func upload(multipartFormData: @escaping (PXKit.MultipartFormData) -> Swift.Void, usingThreshold encodingMemoryThreshold: Swift.UInt64 = SessionManager.multipartFormDataEncodingMemoryThreshold, with urlRequest: PXKit.URLRequestConvertible, queue: Dispatch.DispatchQueue? = nil, encodingCompletion: ((PXKit.SessionManager.MultipartFormDataEncodingResult) -> Swift.Void)?)
+  open func upload(_ stream: Foundation.InputStream, with urlRequest: any PXKit.URLRequestConvertible) -> PXKit.UploadRequest
+  open func upload(multipartFormData: @escaping (PXKit.MultipartFormData) -> Swift.Void, usingThreshold encodingMemoryThreshold: Swift.UInt64 = SessionManager.multipartFormDataEncodingMemoryThreshold, to url: any PXKit.URLConvertible, method: PXKit.HTTPMethod = .post, headers: PXKit.HTTPHeaders? = nil, queue: Dispatch.DispatchQueue? = nil, encodingCompletion: ((PXKit.SessionManager.MultipartFormDataEncodingResult) -> Swift.Void)?)
+  open func upload(multipartFormData: @escaping (PXKit.MultipartFormData) -> Swift.Void, usingThreshold encodingMemoryThreshold: Swift.UInt64 = SessionManager.multipartFormDataEncodingMemoryThreshold, with urlRequest: any PXKit.URLRequestConvertible, queue: Dispatch.DispatchQueue? = nil, encodingCompletion: ((PXKit.SessionManager.MultipartFormDataEncodingResult) -> Swift.Void)?)
   @available(iOS 9.0, macOS 10.11, tvOS 9.0, *)
   @discardableResult
   open func stream(withHostName hostName: Swift.String, port: Swift.Int) -> PXKit.StreamRequest
@@ -1256,7 +1258,7 @@ public enum HTTPMethod : Swift.String {
 }
 public typealias Parameters = [Swift.String : Any]
 public protocol ParameterEncoding {
-  func encode(_ urlRequest: PXKit.URLRequestConvertible, with parameters: PXKit.Parameters?) throws -> Foundation.URLRequest
+  func encode(_ urlRequest: any PXKit.URLRequestConvertible, with parameters: PXKit.Parameters?) throws -> Foundation.URLRequest
 }
 public struct URLEncoding : PXKit.ParameterEncoding {
   public enum Destination {
@@ -1299,7 +1301,7 @@ public struct URLEncoding : PXKit.ParameterEncoding {
   public let arrayEncoding: PXKit.URLEncoding.ArrayEncoding
   public let boolEncoding: PXKit.URLEncoding.BoolEncoding
   public init(destination: PXKit.URLEncoding.Destination = .methodDependent, arrayEncoding: PXKit.URLEncoding.ArrayEncoding = .brackets, boolEncoding: PXKit.URLEncoding.BoolEncoding = .numeric)
-  public func encode(_ urlRequest: PXKit.URLRequestConvertible, with parameters: PXKit.Parameters?) throws -> Foundation.URLRequest
+  public func encode(_ urlRequest: any PXKit.URLRequestConvertible, with parameters: PXKit.Parameters?) throws -> Foundation.URLRequest
   public func queryComponents(fromKey key: Swift.String, value: Any) -> [(Swift.String, Swift.String)]
   public func escape(_ string: Swift.String) -> Swift.String
 }
@@ -1312,8 +1314,8 @@ public struct JSONEncoding : PXKit.ParameterEncoding {
   }
   public let options: Foundation.JSONSerialization.WritingOptions
   public init(options: Foundation.JSONSerialization.WritingOptions = [])
-  public func encode(_ urlRequest: PXKit.URLRequestConvertible, with parameters: PXKit.Parameters?) throws -> Foundation.URLRequest
-  public func encode(_ urlRequest: PXKit.URLRequestConvertible, withJSONObject jsonObject: Any? = nil) throws -> Foundation.URLRequest
+  public func encode(_ urlRequest: any PXKit.URLRequestConvertible, with parameters: PXKit.Parameters?) throws -> Foundation.URLRequest
+  public func encode(_ urlRequest: any PXKit.URLRequestConvertible, withJSONObject jsonObject: Any? = nil) throws -> Foundation.URLRequest
 }
 public struct PropertyListEncoding : PXKit.ParameterEncoding {
   public static var `default`: PXKit.PropertyListEncoding {
@@ -1328,15 +1330,15 @@ public struct PropertyListEncoding : PXKit.ParameterEncoding {
   public let format: Foundation.PropertyListSerialization.PropertyListFormat
   public let options: Foundation.PropertyListSerialization.WriteOptions
   public init(format: Foundation.PropertyListSerialization.PropertyListFormat = .xml, options: Foundation.PropertyListSerialization.WriteOptions = 0)
-  public func encode(_ urlRequest: PXKit.URLRequestConvertible, with parameters: PXKit.Parameters?) throws -> Foundation.URLRequest
+  public func encode(_ urlRequest: any PXKit.URLRequestConvertible, with parameters: PXKit.Parameters?) throws -> Foundation.URLRequest
 }
 @objc public protocol TreeBuilding {
   @objc func build() -> [Swift.String : Any]
 }
 @objc public protocol UIMapperConsuming {
-  @objc func getViewPosition(builder: PXKit.TreeBuilding, completion: @escaping (([CoreFoundation.CGRect]?) -> Swift.Void))
-  @objc func getViewAtPosition(screenPosition: CoreFoundation.CGPoint, completion: @escaping ((PXKit.TreeBuilding?) -> Swift.Void))
-  @objc func createDOMStructure(completion: @escaping ((PXKit.TreeBuilding?) -> Swift.Void))
+  @objc func getViewPosition(builder: any PXKit.TreeBuilding, completion: @escaping (([CoreFoundation.CGRect]?) -> Swift.Void))
+  @objc func getViewAtPosition(screenPosition: CoreFoundation.CGPoint, completion: @escaping (((any PXKit.TreeBuilding)?) -> Swift.Void))
+  @objc func createDOMStructure(completion: @escaping (((any PXKit.TreeBuilding)?) -> Swift.Void))
   @objc func getFilterClass() -> Swift.String
   @objc var isCrossPlatform: Swift.Bool { get }
 }
@@ -1399,7 +1401,7 @@ public protocol RequestAdapter {
 }
 public typealias RequestRetryCompletion = (_ shouldRetry: Swift.Bool, _ timeDelay: Foundation.TimeInterval) -> Swift.Void
 public protocol RequestRetrier {
-  func should(_ manager: PXKit.SessionManager, retry request: PXKit.Request, with error: Swift.Error, completion: @escaping PXKit.RequestRetryCompletion)
+  func should(_ manager: PXKit.SessionManager, retry request: PXKit.Request, with error: any Swift.Error, completion: @escaping PXKit.RequestRetryCompletion)
 }
 public typealias HTTPHeaders = [Swift.String : Swift.String]
 open class Request {

@@ -4,23 +4,15 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>GPXAlert.storyboardc/Dhr-sX-pCE-view-vrM-qW-A3F.nib/objects-11.0+.nib</key>
+		<key>GPXAlert.storyboardc/Dhr-sX-pCE-view-vrM-qW-A3F.nib</key>
 		<data>
 		fbcgui4FbYzAiMssJjSmAYctFKo=
-		</data>
-		<key>GPXAlert.storyboardc/Dhr-sX-pCE-view-vrM-qW-A3F.nib/runtime.nib</key>
-		<data>
-		BMiZWMaW7OrDTUDZzAZ2gg5vqbA=
 		</data>
 		<key>GPXAlert.storyboardc/Info.plist</key>
 		<data>
 		lK4SIw+v34cd/pAchqJ1k5K0Tng=
 		</data>
-		<key>GPXAlert.storyboardc/UIViewController-Dhr-sX-pCE.nib/objects-11.0+.nib</key>
-		<data>
-		/eHL1oL1BdKHDvAnQ0zu7X1PY9M=
-		</data>
-		<key>GPXAlert.storyboardc/UIViewController-Dhr-sX-pCE.nib/runtime.nib</key>
+		<key>GPXAlert.storyboardc/UIViewController-Dhr-sX-pCE.nib</key>
 		<data>
 		/eHL1oL1BdKHDvAnQ0zu7X1PY9M=
 		</data>
@@ -30,7 +22,7 @@
 		</data>
 		<key>GPXWebView.storyboardc/Pei-2Y-KLP-view-hjS-ud-QKb.nib</key>
 		<data>
-		BG2JgMjSEyo6DKNkweKugEd4AhE=
+		fPY1Iml9wMN15XzbvDF2H/aVKVc=
 		</data>
 		<key>GPXWebView.storyboardc/UIViewController-Pei-2Y-KLP.nib</key>
 		<data>
@@ -54,7 +46,7 @@
 		</data>
 		<key>Headers/PXKit-Swift.h</key>
 		<data>
-		LwBP7ntMqSqBmd9GNasDAoCBJGU=
+		04zQihIQoC2r+gIr8AHOSrwu8RQ=
 		</data>
 		<key>Headers/PXKit.h</key>
 		<data>
@@ -62,47 +54,47 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		l+uKz3rcNHKuUo4BnChqWyMNKc8=
+		B2s+S5QAU4nyDmo9fsxIGiemzj0=
 		</data>
 		<key>Modules/PXKit.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		sDIWWteRqLHej0zOxS2g57c5S7M=
+		sUBYaAR8L96nmmOFffOf7+DbwK4=
 		</data>
 		<key>Modules/PXKit.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		T0BXigKw2WFAoceXdH5d7IeCrqA=
+		uYSp+JZLsBHvUhF1kc3azcxRKi8=
 		</data>
 		<key>Modules/PXKit.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		LgnZV8rLZ33E84sOublfykryykY=
+		bAAf1i82pj2sCR905bNSnlXXkds=
 		</data>
 		<key>Modules/PXKit.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		T0BXigKw2WFAoceXdH5d7IeCrqA=
+		uYSp+JZLsBHvUhF1kc3azcxRKi8=
 		</data>
 		<key>Modules/PXKit.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		70d182kRjPUZKEBvQyPbmOQ/UrM=
+		t3RX1lXbegGFlkSkz5girYxf1Lg=
 		</data>
 		<key>Modules/PXKit.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		sDIWWteRqLHej0zOxS2g57c5S7M=
+		sUBYaAR8L96nmmOFffOf7+DbwK4=
 		</data>
 		<key>Modules/PXKit.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		ORYOpuXgFceLxtLo0AQUJQ3tMR0=
+		PLCCTV25RHR34f0CfwJoz1nT+tU=
 		</data>
 		<key>Modules/PXKit.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		NlOjpNpNcUP/1tlU37Ma6BbwKRE=
+		fP+MUoJ6HPFQlK27W0xfO/bX7KI=
 		</data>
 		<key>Modules/PXKit.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		ORYOpuXgFceLxtLo0AQUJQ3tMR0=
+		PLCCTV25RHR34f0CfwJoz1nT+tU=
 		</data>
 		<key>Modules/PXKit.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		yyTlUhUJE6X3Kp6x1iq1fU/KqE8=
+		RIwfyA4YGh8glU40j+QypzmWpXw=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -114,7 +106,7 @@
 		</data>
 		<key>WebEditor.storyboardc/Pei-2Y-KLP-view-hjS-ud-QKb.nib</key>
 		<data>
-		46sPA8LEAIzx6s50HZ0qEf9R+08=
+		8ijGamDmB7MPeayChZTl33zow1o=
 		</data>
 		<key>WebEditor.storyboardc/WebEditorViewController.nib</key>
 		<data>
@@ -127,56 +119,22 @@
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>GPXAlert.storyboardc/Dhr-sX-pCE-view-vrM-qW-A3F.nib/objects-11.0+.nib</key>
+		<key>GPXAlert.storyboardc/Dhr-sX-pCE-view-vrM-qW-A3F.nib</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			fbcgui4FbYzAiMssJjSmAYctFKo=
-			</data>
 			<key>hash2</key>
 			<data>
 			jrHo663rkVJbt0VGEvesEjWx0qGj+JVWbCq3aOkW1DM=
 			</data>
 		</dict>
-		<key>GPXAlert.storyboardc/Dhr-sX-pCE-view-vrM-qW-A3F.nib/runtime.nib</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			BMiZWMaW7OrDTUDZzAZ2gg5vqbA=
-			</data>
-			<key>hash2</key>
-			<data>
-			uTq3stQF77D835ADgFdVf298XFxFeTd+Z3L0naga2FA=
-			</data>
-		</dict>
 		<key>GPXAlert.storyboardc/Info.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			lK4SIw+v34cd/pAchqJ1k5K0Tng=
-			</data>
 			<key>hash2</key>
 			<data>
 			Ykn2Kobgdwff8X2He+XP8eloF3SNd/nSxsmG5uFbd90=
 			</data>
 		</dict>
-		<key>GPXAlert.storyboardc/UIViewController-Dhr-sX-pCE.nib/objects-11.0+.nib</key>
+		<key>GPXAlert.storyboardc/UIViewController-Dhr-sX-pCE.nib</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			/eHL1oL1BdKHDvAnQ0zu7X1PY9M=
-			</data>
-			<key>hash2</key>
-			<data>
-			m/jpwx4Op3MHarit37Bxa0x0snSswHg2e7vsPKqzvvM=
-			</data>
-		</dict>
-		<key>GPXAlert.storyboardc/UIViewController-Dhr-sX-pCE.nib/runtime.nib</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			/eHL1oL1BdKHDvAnQ0zu7X1PY9M=
-			</data>
 			<key>hash2</key>
 			<data>
 			m/jpwx4Op3MHarit37Bxa0x0snSswHg2e7vsPKqzvvM=
@@ -184,10 +142,6 @@
 		</dict>
 		<key>GPXWebView.storyboardc/Info.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			1Ar+t4youW8iJIC33GSADaS74iY=
-			</data>
 			<key>hash2</key>
 			<data>
 			/jrVDiHILuZBK4eSdOREb1PCBdghZWU4WhGzTQoH82U=
@@ -195,21 +149,13 @@
 		</dict>
 		<key>GPXWebView.storyboardc/Pei-2Y-KLP-view-hjS-ud-QKb.nib</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			BG2JgMjSEyo6DKNkweKugEd4AhE=
-			</data>
 			<key>hash2</key>
 			<data>
-			9dmaYgrnxxAHPgVp3UVoVyS4xhJiJJJxVqVysLzenFM=
+			NHgVQzXCaOdgoQbLTaMC30J1f9FnJi8dicfND20n29s=
 			</data>
 		</dict>
 		<key>GPXWebView.storyboardc/UIViewController-Pei-2Y-KLP.nib</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			xAF0SMhjV/z2zvPV1YbWeR+ECNk=
-			</data>
 			<key>hash2</key>
 			<data>
 			rO3l/9Hsr8CrQsKXmIs0tm1FqhzFbl+8n1xi9fXfWXk=
@@ -217,10 +163,6 @@
 		</dict>
 		<key>Headers/GPXAnalytics.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			8DaqQhvlxHBoouAlCGWnUg0da44=
-			</data>
 			<key>hash2</key>
 			<data>
 			SN5Wg0IQlelcQiYvRqJAGVwaof8AD4Mpgof+QnPwVV0=
@@ -228,10 +170,6 @@
 		</dict>
 		<key>Headers/GPXAnalyticsConfiguration.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			YHZzQdEHzBVMTyUYa7Iz7ozEVi0=
-			</data>
 			<key>hash2</key>
 			<data>
 			YZdmFO4/pT2XMagjg8SjQc8Tg3hC0ldNAgtEk6kM0Lo=
@@ -239,10 +177,6 @@
 		</dict>
 		<key>Headers/GPXCrypto.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			l3usxuiJlgrJSJsRFE/oU6mRFWk=
-			</data>
 			<key>hash2</key>
 			<data>
 			xNmu7aOYDsWPzXA1X/9iAvDtD0WfgDBWdGWOQIQelME=
@@ -250,10 +184,6 @@
 		</dict>
 		<key>Headers/GPXSerializableValue.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			i4Ng8BvisDyOoi0XQV7KJyw+AvE=
-			</data>
 			<key>hash2</key>
 			<data>
 			xU/aMnaeEjyY+mqy6uPmrMGbfDdMj2Ro5DeaksbPWjo=
@@ -261,21 +191,13 @@
 		</dict>
 		<key>Headers/PXKit-Swift.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			LwBP7ntMqSqBmd9GNasDAoCBJGU=
-			</data>
 			<key>hash2</key>
 			<data>
-			djQt0Z/diyd2emA1fZZtM83lv5XQYQB95bWVlnSnHRI=
+			py3ZKQa5Yi5yiHnIGINK7vJRBzTbJGYl6rozw5aMZuE=
 			</data>
 		</dict>
 		<key>Headers/PXKit.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			tWgF/2VWIQR0hIgec634rAXNfgU=
-			</data>
 			<key>hash2</key>
 			<data>
 			v8/edKGyg6kYcZ+HOGVnXZyqkm474SoxFcVxldCMU8Y=
@@ -283,120 +205,76 @@
 		</dict>
 		<key>Modules/PXKit.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			sDIWWteRqLHej0zOxS2g57c5S7M=
-			</data>
 			<key>hash2</key>
 			<data>
-			6oWQNextOY5VC9KZZK3zO7IrngwBfAbP72/YU6dbn9U=
+			QYAgK1rGjR2NWrxuEpWjMFPlUyuHiOz61wbbuMnHMt0=
 			</data>
 		</dict>
 		<key>Modules/PXKit.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			T0BXigKw2WFAoceXdH5d7IeCrqA=
-			</data>
 			<key>hash2</key>
 			<data>
-			KYUPVqL4InH4JY++x2aQlgRHzYfjce3qynoUXMvp+Co=
+			kIqv7oG+go3RjXs5mnLFaWTdBHaT5bWVHoDg+B7tvHY=
 			</data>
 		</dict>
 		<key>Modules/PXKit.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			LgnZV8rLZ33E84sOublfykryykY=
-			</data>
 			<key>hash2</key>
 			<data>
-			QfFEJrV/xSM2370OnAMQ8gh0a9RLUl4vTTT3YAU9xeQ=
+			Q9tzyWTGhU/izuEPaTVxKg80XsVHfWfRh9VpoDcdLxw=
 			</data>
 		</dict>
 		<key>Modules/PXKit.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			T0BXigKw2WFAoceXdH5d7IeCrqA=
-			</data>
 			<key>hash2</key>
 			<data>
-			KYUPVqL4InH4JY++x2aQlgRHzYfjce3qynoUXMvp+Co=
+			kIqv7oG+go3RjXs5mnLFaWTdBHaT5bWVHoDg+B7tvHY=
 			</data>
 		</dict>
 		<key>Modules/PXKit.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			70d182kRjPUZKEBvQyPbmOQ/UrM=
-			</data>
 			<key>hash2</key>
 			<data>
-			uXhh/pLYhaaTHbnmbgdOYQjo4nsm9tzhRdZRY9fNHBA=
+			sZOEvgYjF66w/0bmqq7shKPb67q+kf0rnNAP1QqguZs=
 			</data>
 		</dict>
 		<key>Modules/PXKit.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			sDIWWteRqLHej0zOxS2g57c5S7M=
-			</data>
 			<key>hash2</key>
 			<data>
-			6oWQNextOY5VC9KZZK3zO7IrngwBfAbP72/YU6dbn9U=
+			QYAgK1rGjR2NWrxuEpWjMFPlUyuHiOz61wbbuMnHMt0=
 			</data>
 		</dict>
 		<key>Modules/PXKit.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			ORYOpuXgFceLxtLo0AQUJQ3tMR0=
-			</data>
 			<key>hash2</key>
 			<data>
-			kNwRRYxDtpfcYntqeW206IwVfo+eHUwpjPnXMoLkHxQ=
+			2/uThtz+Ul124CLZgc9dLcT009CP0f+SF2RAKyyzVjU=
 			</data>
 		</dict>
 		<key>Modules/PXKit.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			NlOjpNpNcUP/1tlU37Ma6BbwKRE=
-			</data>
 			<key>hash2</key>
 			<data>
-			JVkc5YxRCRdmTVxCakhmjmJ/LdtuEZ+dNTgAQblFjG0=
+			brrbq3pYK7/gI6DLEjfg6CzcQBGiR6HnzX2DaqcWojw=
 			</data>
 		</dict>
 		<key>Modules/PXKit.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			ORYOpuXgFceLxtLo0AQUJQ3tMR0=
-			</data>
 			<key>hash2</key>
 			<data>
-			kNwRRYxDtpfcYntqeW206IwVfo+eHUwpjPnXMoLkHxQ=
+			2/uThtz+Ul124CLZgc9dLcT009CP0f+SF2RAKyyzVjU=
 			</data>
 		</dict>
 		<key>Modules/PXKit.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			yyTlUhUJE6X3Kp6x1iq1fU/KqE8=
-			</data>
 			<key>hash2</key>
 			<data>
-			KtZZcZSAa46LReBrJRWH3UZhZI+JXrAYVXChJcQ7OQo=
+			GbTONxjI/bFB9aFH1qEYGT/geR+y47fdIRbZ3VJWsJA=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			NZK9vPg2eP7KpRdkyrcL6kkX29o=
-			</data>
 			<key>hash2</key>
 			<data>
 			h3lJftJWN5nOV4ChWJlkYBG/uLDLTcUj14jhQ7jUqSs=
@@ -404,10 +282,6 @@
 		</dict>
 		<key>WebEditor.storyboardc/Info.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			aWAvwk9Vtk3EkqkiyJ1qma0a0ww=
-			</data>
 			<key>hash2</key>
 			<data>
 			7jJl1oe/HEQxSrveEM/kyx/bzIYFnM9Ms/POWKbs6X4=
@@ -415,21 +289,13 @@
 		</dict>
 		<key>WebEditor.storyboardc/Pei-2Y-KLP-view-hjS-ud-QKb.nib</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			46sPA8LEAIzx6s50HZ0qEf9R+08=
-			</data>
 			<key>hash2</key>
 			<data>
-			oVAUDnC8M2wT2b4cO58fvDKA3lDPbKj9qYSdErN/9M0=
+			8wDP63ayb5N8q77CPdnCW+5SBI5E04JO9oRU1gfEpyQ=
 			</data>
 		</dict>
 		<key>WebEditor.storyboardc/WebEditorViewController.nib</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			8doDB3+pNYaBbT78Acmm2fbuEJU=
-			</data>
 			<key>hash2</key>
 			<data>
 			yE45B66sipw5FqC2RHBX+WnBdYwd/ahA5fxjooeU6Aw=
@@ -437,10 +303,6 @@
 		</dict>
 		<key>jsBridge.js</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			ILkYd323lvXFkNSu0DihD8iE8bo=
-			</data>
 			<key>hash2</key>
 			<data>
 			uwWpJdCSnXM4NpJ0YgIVIFpg9yeN/XIQmQJSBaDyUu4=
