@@ -24,6 +24,8 @@ enum GainsightPXMethod: String {
     case flutterViewChanged
     case scrollStateChanged
     case reset
+    case hardReset
+    case enableEngagements
 }
 
 enum FlutterMethod: String {
@@ -120,7 +122,13 @@ public class SwiftGainsightpxFlutterPlugin: NSObject, FlutterPlugin {
         case GainsightPXMethod.flutterViewChanged.rawValue, GainsightPXMethod.scrollStateChanged.rawValue:
             break
         case GainsightPXMethod.reset.rawValue:
-            GainsightPX.shared.reset()
+            reset(result: result)
+        case GainsightPXMethod.hardReset.rawValue:
+            hardReset(result: result)
+        case GainsightPXMethod.enableEngagements.rawValue:
+            call.enableEngagements({ (enable) in
+                enableEngagements(enable: enable, result: result)
+            }, error)
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -383,6 +391,28 @@ public class SwiftGainsightpxFlutterPlugin: NSObject, FlutterPlugin {
                        functionName: GainsightPXMethod.exitEditing.rawValue,
                        error: (status: true, nil, nil))
     }
+    
+    private func enableEngagements(enable: Bool, result: @escaping FlutterResult) {
+        GainsightPX.shared.engagements(enable: enable)
+        handleCallback(result: result,
+                       functionName: GainsightPXMethod.enableEngagements.rawValue,
+                       error: (status: true, nil, nil))
+    }
+    
+    private func reset(result: @escaping FlutterResult) {
+        GainsightPX.shared.reset()
+        handleCallback(result: result,
+                       functionName: GainsightPXMethod.reset.rawValue,
+                       error: (status: true, nil, nil))
+    }
+    
+    private func hardReset(result: @escaping FlutterResult) {
+        GainsightPX.shared.hardReset()
+        handleCallback(result: result,
+                       functionName: GainsightPXMethod.hardReset.rawValue,
+                       error: (status: true, nil, nil))
+    }
+
     
     // MARK: - Support Methods
     private func fetchUser(params: [String: Any]) -> User {
