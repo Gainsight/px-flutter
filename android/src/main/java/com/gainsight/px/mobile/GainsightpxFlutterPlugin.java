@@ -295,6 +295,12 @@ public class GainsightpxFlutterPlugin implements FlutterPlugin, MethodCallHandle
       case "reset":
         reset(result);
         break;
+      case "hardReset":
+        hardReset(result);
+        break;
+      case "enableEngagements":
+        enableEngagements((Map<String, Object>)call.arguments, result);
+        break;
       default:
         result.notImplemented();
         break;
@@ -649,6 +655,35 @@ public class GainsightpxFlutterPlugin implements FlutterPlugin, MethodCallHandle
     } catch (Throwable e) {
       result.error(ERROR_CODE, e.getMessage(), e);
       Log.e(TAG, "reset: ", e);
+    }
+  }
+
+  private void hardReset(final Result result) {
+    try {
+      GainsightPX.with().shutdown();
+      result.success("hardReset");
+    } catch (Throwable e) {
+      result.error(ERROR_CODE, e.getMessage(), e);
+      Log.e(TAG, "hardReset: ", e);
+    }
+  }
+
+  @SuppressWarnings("unchecked")
+  private void enableEngagements(Map<String, Object> properties, final Result result) {
+    try {
+      if (properties.containsKey("enable")) {
+        Object object = properties.get("enable");
+        if (object instanceof Boolean) {
+          boolean enableEngagements = (Boolean) object;
+          GainsightPX.with().enableEngagements(enableEngagements);
+          result.success("enableEngagements");
+          return;
+        }
+      }
+      result.error(ERROR_CODE, "Unable to find required fields for enabling/disabling engagements", null);
+    } catch (Throwable tr) {
+      result.error(ERROR_CODE, tr.getMessage(), tr);
+      Log.e(TAG, "screen: ", tr);
     }
   }
 

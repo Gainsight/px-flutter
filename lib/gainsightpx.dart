@@ -202,6 +202,25 @@ class GainsightPX {
     }
   }
 
+  Future<dynamic> hardReset() async {
+    try {
+      return _channel.invokeMethod('hardReset');
+    } on PlatformException catch (e) {
+      return e;
+    }
+  }
+
+  Future<dynamic> enableEngagements(bool enable) async {
+    try {
+      final Map<String, dynamic> arguments = {
+        'enable': enable,
+      };
+      return await _channel.invokeMethod('enableEngagements', arguments);
+    } on PlatformException catch (e) {
+      return e;
+    }
+  }
+
   Future<dynamic> enterEditing(String url) async {
     try {
       final Map<String, dynamic> arguments = {
