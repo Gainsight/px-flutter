@@ -143,4 +143,14 @@ extension FlutterMethodCall {
         }
         completion(url)
     }
+    
+    func enableEngagements(_ completion: ((Bool) -> Void), _ errorCompletion: (() -> Void)) {
+        guard let params = arguments as? [String: Any],
+            let enableEngagements = params["enable"] as? Bool else {
+            errorCompletion()
+            return
+        }
+        completion(enableEngagements)
+    }
+
 }
