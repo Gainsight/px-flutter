@@ -1,7 +1,7 @@
 framework module PXKit {
   umbrella header "PXKit.h"
-
   export *
+
   module * { export * }
 }
 

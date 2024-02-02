@@ -8,7 +8,6 @@ import 'dart:js_util';
 import 'package:flutter/services.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
-import 'account.dart';
 import 'user.dart';
 
 class WebSDK {
@@ -179,25 +178,23 @@ class WebSDK {
     try {
       if (call.arguments != null && !_isEditorMode) {
         final List viewElements = call.arguments['viewElements'];
-        if (viewElements != null) {
-          final List tmp = [];
-          for (final viewElement in viewElements) {
-            final String name = _classNameModifier(viewElement['className']);
-            final Map element = {
-              'tagName': name,
-              'child_n': viewElement['childN'],
-              'child_tag_n': viewElement['childClassN'],
-              'attributes': viewElement['attributes']
-            };
-            tmp.add(element);
-          }
-          final webViewElements = JsObject.jsify(tmp);
-          js.context.callMethod(
-              'aptrinsic', ['send', 'click', webViewElements]);
-          log('WebSDK handledMethodCall - ${call.method}');
-          return true;
+        final List tmp = [];
+        for (final viewElement in viewElements) {
+          final String name = _classNameModifier(viewElement['className']);
+          final Map element = {
+            'tagName': name,
+            'child_n': viewElement['childN'],
+            'child_tag_n': viewElement['childClassN'],
+            'attributes': viewElement['attributes']
+          };
+          tmp.add(element);
         }
-      }
+        final webViewElements = JsObject.jsify(tmp);
+        js.context.callMethod(
+            'aptrinsic', ['send', 'click', webViewElements]);
+        log('WebSDK handledMethodCall - ${call.method}');
+        return true;
+            }
       return false;
     } on Exception catch(e) {
       onError(call.method, e.toString());

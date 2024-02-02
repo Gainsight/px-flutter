@@ -15,10 +15,11 @@ import 'user.dart';
 typedef EngagementCompletion = bool Function(EngagementMetaData);
 
 class GainsightPX {
-  final MethodChannel _channel = const MethodChannel('gainsightpx');
   GainsightPX._privateConstructor() {
     _channel.setMethodCallHandler(_editorMapperHandler);
   }
+
+  final MethodChannel _channel = const MethodChannel('gainsightpx');
 
   var _initialized = false;
   static bool get isInitialized {
@@ -210,6 +211,7 @@ class GainsightPX {
     }
   }
 
+  // ignore: avoid_positional_boolean_parameters
   Future<dynamic> enableEngagements(bool enable) async {
     try {
       final Map<String, dynamic> arguments = {
@@ -297,6 +299,11 @@ class GainsightPX {
     }
   }
 
+  Matrix4 getTransformMatrix() {
+//    return RendererBinding.instance!.createViewConfiguration().toMatrix();
+    return RendererBinding.instance.renderViews.first.configuration.toMatrix();
+  }
+
   List _getViewPosition(dynamic arguments) {
     final List viewElements = List.from(arguments['viewElements']);
     if (viewElements[0][_TouchInterceptorKeys.className] ==
@@ -306,8 +313,7 @@ class GainsightPX {
     final touchInterpreter = _TouchInterpreter.instance;
     var rect = touchInterpreter.rectForViewElementTree(viewElements);
     if (arguments['global'] != null) {
-      final Matrix4 transform =
-          RendererBinding.instance!.createViewConfiguration().toMatrix();
+      final Matrix4 transform = getTransformMatrix();
       rect = _transformToGlobalRect(transform, rect!);
     }
     return [rect];
@@ -319,8 +325,7 @@ class GainsightPX {
       final double dy = arguments['y'];
       var offset = Offset(dx, dy);
       final touchInterpreter = _TouchInterpreter.instance;
-      final Matrix4 transform =
-          RendererBinding.instance!.createViewConfiguration().toMatrix();
+      final Matrix4 transform = getTransformMatrix();
       if (arguments['global'] != null) {
         offset = _transformToLocalPoint(transform, offset);
       }
@@ -439,7 +444,7 @@ class _TouchInterpreter {
       final renderObject = element.renderObject;
       if (widget.key != null && widget.key is ValueKey) {
         String keyString = widget.key.toString();
-        keyString = keyString.replaceAll(RegExp(r"[^\s\w]"), '');
+        keyString = keyString.replaceAll(RegExp(r'[^\s\w]'), '');
         if (!keyString.startsWith('_')) {
           _keysArray?[renderObject.hashCode] = keyString;
         }
@@ -555,7 +560,8 @@ class _TouchInterpreter {
   void _performHitTest(Offset position) {
     _currentPosition = position;
     final HitTestResult hitTestResult = HitTestResult();
-    RendererBinding.instance!.hitTest(hitTestResult, _currentPosition!);
+    RendererBinding.instance.hitTestInView(hitTestResult, _currentPosition!,
+        RendererBinding.instance.renderViews.first.flutterView.viewId);
     final Iterator<HitTestEntry> entries = hitTestResult.path.iterator;
     //Save HitTest result
     _currentEntries = entries;
@@ -577,7 +583,7 @@ class _TouchInterpreter {
           int? itemIndex;
           final List<RenderObject> renderObjectChildren = [];
           final RenderObject? renderObjectParent =
-              renderObject.parent as RenderObject?;
+              renderObject.parent;
 
           if (renderObjectParent != null) {
             renderObjectParent.visitChildren(renderObjectChildren.add);
@@ -787,18 +793,10 @@ class _TouchListenerState extends State<TouchListener> {
 
     return Listener(
       behavior: HitTestBehavior.opaque,
-      onPointerDown: (d) {
-        tapRecognizer._onPointerDown(d);
-      },
-      onPointerMove: (d) {
-        tapRecognizer._onPointerMoved(d);
-      },
-      onPointerCancel: (d) {
-        tapRecognizer._onPointerCanceled(d);
-      },
-      onPointerUp: (d) {
-        tapRecognizer._onPointerUp(d);
-      },
+      onPointerDown: tapRecognizer._onPointerDown,
+      onPointerMove: tapRecognizer._onPointerMoved,
+      onPointerCancel: tapRecognizer._onPointerCanceled,
+      onPointerUp: tapRecognizer._onPointerUp,
       child: finalChild,
     );
   }
