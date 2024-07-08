@@ -26,6 +26,7 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
+    namespace 'com.gainsight.px.mobile.flutter'
     compileSdkVersion 31
 
     defaultConfig {
