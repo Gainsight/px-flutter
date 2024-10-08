@@ -8,8 +8,7 @@ class Configurations {
       this.shouldTrackTapEvents = false,
       this.reportTrackingIssues = false,
       this.enable = true,
-      this.host = PXHost.us,
-      this.collectDeviceId = true});
+      this.host = PXHost.us});
 
   Configurations.fromJson(Map<String, dynamic> json)
       : apiKey = json['apiKey'],
@@ -22,7 +21,6 @@ class Configurations {
         shouldTrackTapEvents = json['shouldTrackTapEvents'],
         reportTrackingIssues = json['reportTrackingIssues'],
         enable = json['enable'],
-        collectDeviceId = json['collectDeviceId'],
         proxy = json['proxy'],
         host = json['host'];
 
@@ -35,7 +33,6 @@ class Configurations {
   bool shouldTrackTapEvents;
   bool reportTrackingIssues;
   bool enable;
-  bool collectDeviceId;
   String? proxy;
   PXHost host;
 
@@ -50,7 +47,6 @@ class Configurations {
       'shouldTrackTapEvents': shouldTrackTapEvents,
       'reportTrackingIssues': reportTrackingIssues,
       'enable': enable,
-      'collectDeviceId': collectDeviceId,
       'proxy': proxy,
       'host': host.name
     }..removeWhere((key, value) => value == null);
