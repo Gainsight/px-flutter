@@ -483,10 +483,6 @@ public class GainsightpxFlutterPlugin implements FlutterPlugin, MethodCallHandle
           builder.engagementCallback(engagementCallback);
         }
 
-        Boolean collectDeviceId = (Boolean) configuration.get("collectDeviceId");
-        if (collectDeviceId != null) {
-          builder.collectDeviceId(collectDeviceId);
-        }
         GainsightPX instance;
         try {
           instance = builder.build();
