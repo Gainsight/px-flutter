@@ -4,20 +4,19 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'gainsightpx'
-  s.version          = '1.11.0'
+  s.version          = '1.13.1'
   s.summary          = 'A new flutter plugin project.'
   s.description      = 'Gainsight PX flutter plugin for analytics'
   s.homepage         = 'http://example.com'
-  s.license          = { :file => '../LICENSE' }
+  s.license          = { :type => "Commercial", :text => "https://www.gainsight.com/policy/terms-of-service/" }
   s.author           = { 'GainsightPX' => 'support@gainsight.com' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.platform = :ios, '11.0'
+  s.platform = :ios, '13.0'
 
   # Flutter.framework does not contain a i386 slice. Only x86_64 simulators are supported.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'VALID_ARCHS[sdk=iphonesimulator*]' => 'x86_64' }
   s.swift_version = '5.0'
-  s.vendored_frameworks = 'PXKit.xcframework'
-
+  s.dependency 'Gainsight-PX', '1.13.0'
 end
