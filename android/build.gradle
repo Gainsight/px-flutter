@@ -4,18 +4,18 @@ version '1.0'
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0'
+        classpath 'com.android.tools.build:gradle:8.7.3'
     }
 }
 
 rootProject.allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
 
         maven {
             url "https://github.com/Gainsight/px-android/raw/main/"
@@ -27,10 +27,10 @@ apply plugin: 'com.android.library'
 
 android {
     namespace 'com.gainsight.px.mobile.flutter'
-    compileSdkVersion 31
+    compileSdkVersion 36
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 24
     }
     lintOptions {
         disable 'InvalidPackage'
